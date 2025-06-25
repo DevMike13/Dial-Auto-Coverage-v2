@@ -22,6 +22,7 @@ const ThankYouPage = () => {
     const [inboundNumber, setInboundNumber] = useState<string | null>(null);
     const medicareEnrollment = searchParams.get('medicareEnrollment');
     const type = searchParams.get('type');
+    const didNumber = searchParams.get('did_number');
     const [generatedNumber, setGeneratedNumber] = useState<string | null>(null);
 
     const [showStep1, setShowStep1] = useState(false);
@@ -129,38 +130,38 @@ const ThankYouPage = () => {
     }
     }, [medicareEnrollment, type, isLoading, isSubmitted]);
 
-    useEffect(() => {
-        if (!isLoading && isSubmitted) {
-            const inlineScript = document.createElement('script');
-            inlineScript.type = 'text/javascript';
-            if (medicareEnrollment == 'Yes' && type == 'Insured') {
-                inlineScript.innerHTML = `
-                    setTimeout(function() {
-                    let phoneLink = document.getElementById("phoneLink1");
+    // useEffect(() => {
+    //     if (!isLoading && isSubmitted) {
+    //         const inlineScript = document.createElement('script');
+    //         inlineScript.type = 'text/javascript';
+    //         if (medicareEnrollment == 'Yes' && type == 'Insured') {
+    //             inlineScript.innerHTML = `
+    //                 setTimeout(function() {
+    //                 let phoneLink = document.getElementById("phoneLink1");
                     
-                    if (phoneLink) {
-                        phoneLink.href = "tel:+1" + phoneLink.innerText;
-                    }
-                    }, 2000);
-                `;
+    //                 if (phoneLink) {
+    //                     phoneLink.href = "tel:+1" + phoneLink.innerText;
+    //                 }
+    //                 }, 2000);
+    //             `;
                 
-            } else if (medicareEnrollment == 'No' && type == 'Uninsured') {
-                inlineScript.innerHTML = `
-                    setTimeout(function() {  
-                    let phoneLink = document.getElementById("phoneLink2");
-                    if (phoneLink) {
-                        phoneLink.href = "tel:+1" +  phoneLink.innerText;
-                    }
-                  }, 2000);
-                `;
-            }
+    //         } else if (medicareEnrollment == 'No' && type == 'Uninsured') {
+    //             inlineScript.innerHTML = `
+    //                 setTimeout(function() {  
+    //                 let phoneLink = document.getElementById("phoneLink2");
+    //                 if (phoneLink) {
+    //                     phoneLink.href = "tel:+1" +  phoneLink.innerText;
+    //                 }
+    //               }, 2000);
+    //             `;
+    //         }
 
-            document.body.appendChild(inlineScript); 
-            return () => {
-                document.body.removeChild(inlineScript);
-            };
-        }
-    }, [medicareEnrollment, isLoading, isSubmitted]);
+    //         document.body.appendChild(inlineScript); 
+    //         return () => {
+    //             document.body.removeChild(inlineScript);
+    //         };
+    //     }
+    // }, [medicareEnrollment, isLoading, isSubmitted]);
       
 
     useEffect(() => {
@@ -202,16 +203,10 @@ const ThankYouPage = () => {
                     <div className='flex flex-col gap-5'>
                         { isSubmitted ? (
                             <>
-                                { inboundNumber ? (
-                                        <>
-                                            <p className="text-lg"><b>Great News!</b> You're one step closer to reviewing your Auto Insurance plan options. To speak with a Licensed Insurance Agent right away, call us now by tapping the button below. Our team is standing by to assist you!</p>
-                                            <FinalCallCard  />
-                                        </>
-                                    ) : (
-                                        <p className="text-lg font-semibold">Thank you for your interest! Unfortunately, we don’t currently have an offer that matches your needs, but we appreciate your time and may reach out in the future if opportunities become available. Have a great day!</p>
-                                    )
-
-                                }
+                                <p className="text-lg">
+                                <b>Great News!</b> You're one step closer to reviewing your Auto Insurance plan options. To speak with a Licensed Insurance Agent right away, call us now by tapping the button below. Our team is standing by to assist you!
+                                </p>
+                                <FinalCallCard />
                             </>
                             ) : 
                             (

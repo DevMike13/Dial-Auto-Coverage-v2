@@ -15,6 +15,7 @@ declare global {
 const FinalCallCard = () => {
     const searchParams = useSearchParams();
     const medicareEnrollment = searchParams.get('medicareEnrollment');
+    const didNumber = searchParams.get('did_number');
     // const formattedNumber = phoneNumber.replace(/(?!^\+)[^\d]/g, '');
     // const telHref = `tel:${formattedNumber}`;
     const handleClick = () => {
@@ -32,13 +33,11 @@ const FinalCallCard = () => {
             onClick={() => {
                 handleClick();
 
-                const phoneLinkId = medicareEnrollment === "Yes" ? "phoneLink1" : "phoneLink2";
-                const phoneLink = document.getElementById(phoneLinkId);
-                if (phoneLink) {
-                  const phoneNumber = phoneLink.textContent?.trim().replace(/\D/g, "");
-                  if (phoneNumber) {
-                    window.location.href = `tel:+1${phoneNumber}`;
-                  }
+                if (didNumber) {
+                    const sanitized = didNumber.replace(/\D/g, '');
+                    window.location.href = `tel:+${sanitized}`;
+                } else {
+                    console.warn('No valid phone number (didNumber) found.');
                 }
             }}
         >
@@ -50,20 +49,20 @@ const FinalCallCard = () => {
                     {medicareEnrollment === "Yes" && (
                         <a
                             id="phoneLink1"
-                            href="tel:+000"
+                            href={didNumber ? `tel:+${didNumber.replace(/\D/g, '')}` : 'tel:'}
                             className="md:text-2xl text-lg font-bold text-red-500"
                         >
-                            1234567891
+                            {didNumber ? `+${didNumber.replace(/\D/g, '')}` : 'N/A'}
                         </a>
                     )}
 
                     {medicareEnrollment === "No" && (
                         <a
                             id="phoneLink2"
-                            href="tel:+000"
+                            href={didNumber ? `tel:+${didNumber.replace(/\D/g, '')}` : 'tel:'}
                             className="md:text-2xl text-lg font-bold text-red-500"
                         >
-                            1234567892
+                            {didNumber ? `+${didNumber.replace(/\D/g, '')}` : 'N/A'}
                         </a>
                     )}
                 </div>

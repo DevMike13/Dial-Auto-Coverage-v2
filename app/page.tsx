@@ -27,6 +27,28 @@ export default function Home() {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    const externalScript = document.createElement("script");
+    externalScript.src = "https://www.googletagmanager.com/gtag/js?id=AW-17128153028";
+    externalScript.async = true;
+    document.head.appendChild(externalScript);
+
+    const initScript = document.createElement("script");
+    initScript.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17128153028');
+    `;
+    document.head.appendChild(initScript);
+
+    return () => {
+      document.head.removeChild(externalScript);
+      document.head.removeChild(initScript);
+    };
+  }, []);
+
+
   // const campaignId = searchParams.get('offer_id');
   // const affId = searchParams.get('affiliate_id');
   // const s1 = searchParams.get('sub1');

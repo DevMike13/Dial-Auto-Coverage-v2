@@ -17,6 +17,7 @@ const Step7 = () => {
   const trans_id = searchParams.get('transaction_id');
   const key = searchParams.get('key');
   const type = searchParams.get('type');
+  const did_number = searchParams.get('did_number');
 
   useEffect(() => {
     console.log('key:', key);
@@ -29,107 +30,27 @@ const Step7 = () => {
       setError('Please enter a valid 10-digit phone number');
       return;
     }
+  
     setError('');
     setIsSubmitting(true);
-
-    let payload: Record<string, any> = {};
-    
-    if (formData.medicareEnrollment === 'Yes' && type === 'Insured') {
-      console.log(key);
-      payload = {
-        rcm_campaign_id: campaignId || '5148',
-        rcm_aff_id: affId || '1',
-        rcm_aff_sub: s1 || 'mysub1',
-        first_name: '',
-        last_name: '',
-        dob: '',
-        zip_code: formData.zip,
-        state: formData.state,
-        phone: phone,
-        xxTrustedFormCertUrl: 'https://example.com',
-        api_key: key,
-        transaction_id: trans_id || ''
-      };
-    } else if(formData.medicareEnrollment === 'No' && type === 'Uninsured') {
-      console.log(key);
-      payload = {
-        rcm_campaign_id: campaignId || '5148',
-        rcm_aff_id: affId || '1',
-        rcm_aff_sub: s1 || 'mysub1',
-        first_name: '',
-        last_name: '',
-        dob: '',
-        zip_code: formData.zip,
-        state: formData.state,
-        phone: phone,
-        xxTrustedFormCertUrl: 'https://example.com',
-        api_key: key,
-        transaction_id: trans_id || ''
-      };
-    }
-
+  
     try {
-      
-      if(formData.medicareEnrollment === 'Yes' && type === 'Insured'){
-        const response = await fetch('https://api-leaddepot.offerwings.com/api/v1/lead/receive/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to submit data to lead depot');
-        }
-
-        const result = await response.json();
-        const parsedResult = JSON.parse(result.result);
-        const inboundNumber = parsedResult.inbound_number;
-
-        if (inboundNumber) {
-          localStorage.setItem('inbound_number', inboundNumber);
-        }
-      } else if (formData.medicareEnrollment === 'No' && type === 'Uninsured'){
-        const response = await fetch('https://api-leaddepot.offerwings.com/api/v1/lead/receive/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to submit data to lead depot');
-        }
-
-        const result = await response.json();
-        const parsedResult = JSON.parse(result.result);
-        const inboundNumber = parsedResult.inbound_number;
-
-        if (inboundNumber) {
-          localStorage.setItem('inbound_number', inboundNumber);
-        }
-      }
-
       const query = new URLSearchParams({
         offer_id: campaignId || '',
         affiliate_id: affId || '',
         sub1: s1 || '',
         transaction_id: trans_id || '',
-        // first_name: formData.firstName || '',
-        // last_name: formData.lastName || '',
-        // dob: formData.birthDate || '',
         zip_code: formData.zip || '',
         state: formData.state || '',
         phone: phone || '',
         medicareEnrollment: formData.medicareEnrollment || '',
         key: key || '',
-        type: type || ''
+        type: type || '',
+        did_number: did_number || ''
       }).toString();
-
+  
       router.push(`/thank-you?${query}`);
-
+  
       setTimeout(() => {
         resetForm();
       }, 2000);
@@ -140,7 +61,7 @@ const Step7 = () => {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <div className='flex flex-col gap-5'>
       <h1 className='font-bold md:text-4xl text-2xl text-center'>What's your phone number?</h1>
