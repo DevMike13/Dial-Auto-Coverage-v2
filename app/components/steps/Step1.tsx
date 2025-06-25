@@ -1,24 +1,13 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { useFormStore } from '@/stores/formStore';
 import CallCard from '../card/CallCard';
 
 const Step1 = () => {
   const { updateField, nextStep } = useFormStore();
-  const searchParams = useSearchParams();
   
   const options = ['Yes', 'No'];
-
-  useEffect(() => {
-    const zip = searchParams.get('zip');
-    const phone = searchParams.get('phone');
-
-    if (zip) updateField('zip', zip);
-    if (phone) updateField('phone', phone);
-  }, [searchParams, updateField]);
-  
 
   const handleOptionClick = (value: string) => {
     updateField('medicareEnrollment', value);
@@ -42,9 +31,8 @@ const Step1 = () => {
       </div>
       {/* <CallCard /> */}
     </div>
-  )
-}
-
+  );
+};
 
 export const SuspenseStep1 = () => (
   <Suspense fallback={<div>Loading...</div>}>

@@ -2,13 +2,8 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-// import Step1 from './components/steps/Step1';
 import { SuspenseStep1 } from './components/steps/Step1';
 import Step2 from './components/steps/Step2';
-import Step3 from './components/steps/Step3';
-import Step4 from './components/steps/Step4';
-import Step6 from './components/steps/Step6';
-// import Step7 from './components/steps/Step7';
 import { SuspenseStep7 } from './components/steps/Step7';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -47,14 +42,6 @@ export default function Home() {
       document.head.removeChild(initScript);
     };
   }, []);
-
-
-  // const campaignId = searchParams.get('offer_id');
-  // const affId = searchParams.get('affiliate_id');
-  // const s1 = searchParams.get('sub1');
-  // console.log('Campaign ID:', campaignId);
-  // console.log('Affiliate ID:', affId);
-  // console.log('S1:', s1);
 
   const renderStep = () => {
     switch (step) {

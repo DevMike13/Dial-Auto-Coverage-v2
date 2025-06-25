@@ -2,14 +2,18 @@ import { create } from "@/node_modules/zustand/index";
 import { persist } from '@/node_modules/zustand/middleware';
 
 type FormData = {
-    medicareEnrollment: string;
-    zip: string;
-    state: string;
-    // firstName: string;
-    // lastName: string;
-    // birthDate: string;
-    phone: string;
-  };
+  medicareEnrollment: string;
+  zip: string;
+  state: string;
+  phone: string;
+  offer_id: string;
+  affiliate_id: string;
+  sub1: string;
+  transaction_id: string;
+  key: string;
+  type: string;
+  did_number: string;
+};
   
   type FormStore = {
     step: number;
@@ -30,10 +34,14 @@ type FormData = {
           medicareEnrollment: '',
           zip: '',
           state: '',
-          // firstName: '',
-          // lastName: '',
-          // birthDate: '',
-          phone: ''
+          phone: '',
+          offer_id: '5148',
+          affiliate_id: '3407',
+          sub1: '',
+          transaction_id: '',
+          key: '',
+          type: '',
+          did_number: '+18885045256'
         },
         nextStep: () => set((state) => ({ step: state.step + 1 })),
         prevStep: () => set((state) => ({ step: state.step - 1 })),
@@ -42,18 +50,22 @@ type FormData = {
             formData: { ...state.formData, [field]: value },
           })),
         resetForm: () =>
-          set({
+          set((state) => ({
             step: 0,
             formData: {
               medicareEnrollment: '',
               zip: '',
               state: '',
-              // firstName: '',
-              // lastName: '',
-              // birthDate: '',
-              phone: ''
+              phone: '',
+              offer_id: state.formData.offer_id,
+              affiliate_id: state.formData.affiliate_id,
+              sub1: '',
+              transaction_id: '',
+              key: '',
+              type: '',
+              did_number: state.formData.did_number
             },
-          }),
+          })),
           hasHydrated: false,
           setHasHydrated: (hasHydrated) => set({ hasHydrated }),
       }),

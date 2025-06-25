@@ -14,15 +14,17 @@ declare global {
 }
 
 const ThankYouPage = () => {
+    const { resetForm, formData } = useFormStore();
     const searchParams = useSearchParams();
-    const { resetForm } = useFormStore();
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [progress, setProgress] = useState(0);
     const [inboundNumber, setInboundNumber] = useState<string | null>(null);
-    const medicareEnrollment = searchParams.get('medicareEnrollment');
+    const affiliateId = formData.affiliate_id;
+    const offerId = formData.offer_id;
+    const medicareEnrollment = formData.medicareEnrollment;
     const type = searchParams.get('type');
-    const didNumber = searchParams.get('did_number');
+    const didNumber = formData.did_number;
     const [generatedNumber, setGeneratedNumber] = useState<string | null>(null);
 
     const [showStep1, setShowStep1] = useState(false);
@@ -85,7 +87,7 @@ const ThankYouPage = () => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
 
-        if (medicareEnrollment == 'Yes' && type == 'Insured') {
+        if (medicareEnrollment == 'Yes') {
             script.innerHTML = `
             (function() {
                 var a = document.createElement("script");
@@ -105,7 +107,7 @@ const ThankYouPage = () => {
                 (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(a)
             })();
             `;
-        } else if (medicareEnrollment == 'No' && type == 'Uninsured') {
+        } else if (medicareEnrollment == 'No') {
             script.innerHTML = `
             (function() {
                 var a = document.createElement("script");
@@ -128,41 +130,7 @@ const ThankYouPage = () => {
         }
         document.head.appendChild(script);
     }
-    }, [medicareEnrollment, type, isLoading, isSubmitted]);
-
-    // useEffect(() => {
-    //     if (!isLoading && isSubmitted) {
-    //         const inlineScript = document.createElement('script');
-    //         inlineScript.type = 'text/javascript';
-    //         if (medicareEnrollment == 'Yes' && type == 'Insured') {
-    //             inlineScript.innerHTML = `
-    //                 setTimeout(function() {
-    //                 let phoneLink = document.getElementById("phoneLink1");
-                    
-    //                 if (phoneLink) {
-    //                     phoneLink.href = "tel:+1" + phoneLink.innerText;
-    //                 }
-    //                 }, 2000);
-    //             `;
-                
-    //         } else if (medicareEnrollment == 'No' && type == 'Uninsured') {
-    //             inlineScript.innerHTML = `
-    //                 setTimeout(function() {  
-    //                 let phoneLink = document.getElementById("phoneLink2");
-    //                 if (phoneLink) {
-    //                     phoneLink.href = "tel:+1" +  phoneLink.innerText;
-    //                 }
-    //               }, 2000);
-    //             `;
-    //         }
-
-    //         document.body.appendChild(inlineScript); 
-    //         return () => {
-    //             document.body.removeChild(inlineScript);
-    //         };
-    //     }
-    // }, [medicareEnrollment, isLoading, isSubmitted]);
-      
+    }, [medicareEnrollment, isLoading, isSubmitted]);
 
     useEffect(() => {
         if (isLoading) {

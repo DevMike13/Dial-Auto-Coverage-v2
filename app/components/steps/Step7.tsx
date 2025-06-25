@@ -2,27 +2,13 @@
 
 import { useFormStore } from '@/stores/formStore';
 import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const Step7 = () => {
   const { formData, updateField, nextStep, prevStep, resetForm } = useFormStore();
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-
-  const searchParams = useSearchParams();
-  const campaignId = searchParams.get('offer_id');
-  const affId = searchParams.get('affiliate_id');
-  const s1 = searchParams.get('sub1');
-  const trans_id = searchParams.get('transaction_id');
-  const key = searchParams.get('key');
-  const type = searchParams.get('type');
-  const did_number = searchParams.get('did_number');
-
-  useEffect(() => {
-    console.log('key:', key);
-    console.log('type:', type);
-  }, [key, type]);
 
   const handleSubmit = async () => {
     const phone = formData.phone?.trim() || '';
@@ -35,24 +21,17 @@ const Step7 = () => {
     setIsSubmitting(true);
   
     try {
-      const query = new URLSearchParams({
-        offer_id: campaignId || '',
-        affiliate_id: affId || '',
-        sub1: s1 || '',
-        transaction_id: trans_id || '',
-        zip_code: formData.zip || '',
-        state: formData.state || '',
-        phone: phone || '',
-        medicareEnrollment: formData.medicareEnrollment || '',
-        key: key || '',
-        type: type || '',
-        did_number: did_number || ''
-      }).toString();
+      useFormStore.setState({
+        formData: {
+          ...formData,
+          phone,
+        },
+      });
   
-      router.push(`/thank-you?${query}`);
+      router.push('/thank-you');
   
       setTimeout(() => {
-        resetForm();
+        // resetForm();
       }, 2000);
     } catch (err: any) {
       console.error(err);
