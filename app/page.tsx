@@ -45,13 +45,14 @@ export default function Home() {
 
   const renderStep = () => {
     switch (step) {
-      case 0: return <SuspenseStep1 />;
-      case 1: return <Step2 />;
+      
+      case 0: return <Step2 />;
+      case 1: return <SuspenseStep1 />;
       // case 2: return <Step6 />;
       // case 3: return <Step4 />;
       // case 4: return <Step3 />;
       case 2: return <SuspenseStep7 />;
-      default: return <SuspenseStep1 />;
+      default: return <Step2 />;
     }
   };
   if (!hasHydrated) return null;
@@ -59,8 +60,8 @@ export default function Home() {
   return (
     <main className="w-full h-auto bg-[#e8f1ff] overflow-hidden">
       <Header />
-      <div className='w-full flex justify-center mt-10 mb-20'>
-        <div className='md:max-w-[500px] max-w-[330px] w-full'>
+      <div className='w-full flex justify-center mt-10'>
+        <div className='md:max-w-full max-w-[330px] w-full'>
           {renderStep()}
         </div>
       </div>

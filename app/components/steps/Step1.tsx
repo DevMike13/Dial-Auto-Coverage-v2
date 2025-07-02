@@ -5,7 +5,7 @@ import { useFormStore } from '@/stores/formStore';
 import CallCard from '../card/CallCard';
 
 const Step1 = () => {
-  const { updateField, nextStep } = useFormStore();
+  const { updateField, nextStep, prevStep } = useFormStore();
   
   const options = ['Yes', 'No'];
 
@@ -18,7 +18,8 @@ const Step1 = () => {
     <div className='flex flex-col gap-5'>
       <h1 className='font-bold md:text-4xl text-2xl text-center mb-3'>Are you currently insured?</h1>
       {/* <p className='text-center'>Part A covers hospital care. Part B covers medical care.</p> */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 z-10">
+        
         {options.map((option) => (
           <button
             key={option}
@@ -28,6 +29,9 @@ const Step1 = () => {
             {option}
           </button>
         ))}
+        {/* <button onClick={prevStep} className="w-full md:h-[65px] h-[55px] rounded-md cursor-pointer md:text-2xl text-xl font-semibold">
+          Back
+        </button> */}
       </div>
       {/* <CallCard /> */}
     </div>

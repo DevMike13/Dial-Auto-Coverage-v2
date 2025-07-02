@@ -45,6 +45,7 @@ const ThankYouPage = () => {
                 window.location = url;
               }
             };
+            console.log("FUNCTION TRIGGERED");
             gtag('event', 'conversion', {
                 'send_to': 'AW-17128153028/7QWhCNCSnNAaEMS_q-c_',
                 'event_callback': callback
@@ -54,25 +55,25 @@ const ThankYouPage = () => {
         `;
         document.head.appendChild(gtagScript);
     
-        const initScript = document.createElement("script");
-        initScript.innerHTML = `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17128153028');
-        `;
-        document.head.appendChild(initScript);
+        // const initScript = document.createElement("script");
+        // initScript.innerHTML = `
+        //   window.dataLayer = window.dataLayer || [];
+        //   function gtag(){dataLayer.push(arguments);}
+        //   gtag('js', new Date());
+        //   gtag('config', 'AW-17128153028');
+        // `;
+        // document.head.appendChild(initScript);
     
-        const conversionScript = document.createElement("script");
-        conversionScript.innerHTML = `
-          gtag('event', 'conversion', {'send_to': 'AW-17128153028/7QWhCNCSnNAaEMS_q-c_'});
-        `;
-        document.head.appendChild(conversionScript);
+        // const conversionScript = document.createElement("script");
+        // conversionScript.innerHTML = `
+        //   gtag('event', 'conversion', {'send_to': 'AW-17128153028/7QWhCNCSnNAaEMS_q-c_'});
+        // `;
+        // document.head.appendChild(conversionScript);
     
         return () => {
           document.head.removeChild(externalScript);
-          document.head.removeChild(initScript);
-          document.head.removeChild(conversionScript);
+        //   document.head.removeChild(initScript);
+        //   document.head.removeChild(conversionScript);
         };
       }, []);
 
@@ -166,7 +167,7 @@ const ThankYouPage = () => {
     return (
         <main className="w-full h-auto bg-[#e8f1ff] overflow-hidden">
             <Header />
-            <div className='w-full flex justify-center mt-10 mb-20'>
+            <div className='w-full flex justify-center mt-10'>
                 <div className='md:max-w-[500px] max-w-[330px] w-full'>
                     <div className='flex flex-col gap-5'>
                         { isSubmitted ? (
