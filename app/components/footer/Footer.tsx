@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div className="relative w-full bg-[#0c2e5d] text-white overflow-hidden pt-28 pb-10 px-5 lg:-mt-10 md:px-10 flex flex-col items-center gap-5">
+    <div className="relative w-full bg-[#0c2e5d] text-white overflow-hidden pt-28 pb-10 px-5 lg:mt-5 md:px-10 flex flex-col items-center gap-5">
 
      {/* Centered Downward Arc */}
     <div className="absolute -top-1 left-0 lg:-top-10 lg:-left-17 md:-left-10 w-[100%] lg:w-[110%] md:w-[110%] overflow-hidden leading-[0] z-0">

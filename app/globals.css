@@ -5,6 +5,14 @@
   --foreground: #171717;
 }
 
+@theme {
+  /* Reset default breakpoints */
+  /* --breakpoint-sm: 600px;
+  --breakpoint-md: 1125px; */
+  --breakpoint-md: 600px;
+  --breakpoint-lg: 1122px;
+}
+
 @theme inline {
   --animate-tada: tada 1s ease-in-out infinite;
   --color-background: var(--background);

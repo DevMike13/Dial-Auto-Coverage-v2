@@ -60,8 +60,8 @@ export default function Home() {
   return (
     <main className="w-full h-auto bg-[#e8f1ff] overflow-hidden">
       <Header />
-      <div className='w-full flex justify-center mt-10'>
-        <div className='md:max-w-full max-w-[330px] w-full'>
+      <div className='w-full flex justify-center mt-5 lg:mt-8'>
+        <div className='md:max-w-full w-full'>
           {renderStep()}
         </div>
       </div>
